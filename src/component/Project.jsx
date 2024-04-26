@@ -1,29 +1,40 @@
-import React from 'react';
-import BackThisProjectItem from './ProjectItem';
-import './project.css'
-import {data} from './data'
+import React, { useState } from 'react'
+import { data } from './data'
+import './project.css';
+const Project = () => {
+    const [isActive, setIsActive] = useState(1);
 
-function Project() {
+
+    const handleNext = () => {
+
+        setIsActive((pre) => {
+            return ((pre % 3 + 1))
+        })
+    }
+
+    const handlePre = () => {
+
+        setIsActive(() => {
+
+        })
+
+    }
     return (
-        <div className='back-this-project'>
-            <div className='project-close'>x</div>
-            <h1>Back this project</h1>
-            <div>Want to support us in bringing Mastercraft Bamboo Monitor Riser out in the world?</div>
-            <div>
-                {data.map((product, index) => {
-                    return <BackThisProjectItem
-                        key={index}
-                        productName={product['product-name']}
-                        totalPledge={product['total-pledge']}
-                        productDescription={product['product-description']}
-                        totalLeft={product['total-left']}
-                        index={index}
-                    />
-                })}
-
-            </div>
-
-        </div >
+        <div className='products-parent'>
+            <button onClick={handleNext}>next</button>
+            {data.map((item, index) => {
+                return <div className={`product ${isActive === (index + 1) ? 'active' : 'deactive'}`}>
+                    <div>{item['product-name']}</div>
+                    <div>
+                        <div>{item['product-description']}</div>
+                    </div>
+                    <div> {`product left ${item['total-left']}`}</div>
+                    <div>
+                        <img src={item['pic']} alt="" />
+                    </div>
+                </div>
+            })}
+        </div>
     )
 }
 
